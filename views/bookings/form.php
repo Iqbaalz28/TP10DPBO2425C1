@@ -1,4 +1,4 @@
-<?php include 'views/template/header.php'; ?>
+<?php include 'views/templates/header.php'; ?>
 
 <h3>New Dyno/Service Booking</h3>
 
@@ -37,4 +37,4 @@
     </form>
 </div>
 
-<?php include 'views/template/footer.php'; ?>
+<?php include 'views/templates/footer.php'; ?>
