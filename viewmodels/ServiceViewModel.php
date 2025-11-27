@@ -47,23 +47,29 @@ class ServiceViewModel {
     }
 
     public function deleteService($id) {
-            try {
-                // Coba hapus
-                $this->model->deleteService($id);
-                // Jika sukses, redirect
-                header("Location: index.php?page=service_list");
-            } catch (mysqli_sql_exception $e) {
-                // Jika gagal karena Foreign Key (Error 1451)
-                if ($e->getCode() == 1451) {
-                    echo "<script>
-                            alert('GAGAL MENGHAPUS: Layanan ini sedang digunakan dalam data Booking. Hapus data Booking terkait terlebih dahulu.');
-                            window.location.href='index.php?page=service_list';
-                        </script>";
-                } else {
-                    // Error lain
-                    echo "Error: " . $e->getMessage();
-                }
+        try {
+            // 1. Coba Hapus
+            $this->model->deleteService($id);
+            
+            // 2. Jika SUKSES (tidak ada error), Redirect lewat PHP
+            header("Location: index.php?page=service_list");
+            exit; // Penting untuk menghentikan script
+            
+        } catch (mysqli_sql_exception $e) {
+            // 3. Jika GAGAL (Terjadi Error SQL)
+            
+            // Cek Kode Error 1451 (Foreign Key Constraint Fails)
+            if ($e->getCode() == 1451) {
+                // Tampilkan Alert JS, lalu redirect lewat JS
+                echo "<script>
+                        alert('⛔ AKSES DITOLAK: Layanan ini tidak bisa dihapus karena masih tercatat dalam riwayat Booking (Transaksi). Hapus data Booking terkait terlebih dahulu.');
+                        window.location.href='index.php?page=service_list';
+                      </script>";
+            } else {
+                // Error lain
+                echo "Error System: " . $e->getMessage();
             }
         }
     }
+}
 ?>

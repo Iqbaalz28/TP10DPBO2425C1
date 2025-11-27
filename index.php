@@ -140,7 +140,6 @@ switch ($page) {
         break;
     case 'service_delete':
         $serviceVM->deleteService($_GET['id']);
-        header("Location: index.php?page=service_list");
         break;
 
     default:
