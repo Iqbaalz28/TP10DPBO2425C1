@@ -48,7 +48,20 @@ class OwnerViewModel {
     }
 
     public function deleteOwner($id) {
-        return $this->model->deleteOwner($id);
+        try {
+            $this->model->deleteOwner($id);
+            header("Location: index.php?page=owner_list");
+            exit;
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() == 1451) {
+                echo "<script>
+                        alert('⛔ AKSES DITOLAK: Owner ini memiliki mobil yang tercatat dalam riwayat Booking. Sistem mencegah penghapusan untuk menjaga arsip transaksi.');
+                        window.location.href='index.php?page=owner_list';
+                      </script>";
+            } else {
+                echo "Error System: " . $e->getMessage();
+            }
+        }
     }
 }
 ?>

@@ -65,7 +65,20 @@ class CarViewModel {
     }
 
     public function deleteCar($id) {
-        return $this->model->deleteCar($id);
+        try {
+            $this->model->deleteCar($id);
+            header("Location: index.php?page=car_list");
+            exit;
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() == 1451) {
+                echo "<script>
+                        alert('⛔ TIDAK BISA MENGHAPUS MOBIL: Mobil ini tercatat dalam riwayat Booking transaksi. Hapus data booking terkait terlebih dahulu.');
+                        window.location.href='index.php?page=car_list';
+                      </script>";
+            } else {
+                echo "Error System: " . $e->getMessage();
+            }
+        }
     }
 }
 ?>

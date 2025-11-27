@@ -62,7 +62,6 @@ switch ($page) {
         break;
     case 'car_delete':
         $carVM->deleteCar($_GET['id']);
-        header("Location: index.php?page=car_list");
         break;
 
     // --- OWNERS ---
@@ -88,7 +87,6 @@ switch ($page) {
         break;
     case 'owner_delete':
         $ownerVM->deleteOwner($_GET['id']);
-        header("Location: index.php?page=owner_list");
         break;
 
     // --- MECHANICS ---
@@ -114,7 +112,6 @@ switch ($page) {
         break;
     case 'mech_delete':
         $mechVM->deleteMechanic($_GET['id']);
-        header("Location: index.php?page=mech_list");
         break;
 
     // --- SERVICES ---

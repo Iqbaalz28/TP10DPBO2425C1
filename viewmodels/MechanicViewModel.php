@@ -46,7 +46,20 @@ class MechanicViewModel {
     }
 
     public function deleteMechanic($id) {
-        return $this->model->deleteMechanic($id);
+        try {
+            $this->model->deleteMechanic($id);
+            header("Location: index.php?page=mech_list");
+            exit;
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() == 1451) {
+                echo "<script>
+                        alert('⛔ ERROR: Tuner/Mekanik ini sedang terdaftar dalam tugas/booking aktif atau riwayat servis lama. Data tidak boleh dihapus.');
+                        window.location.href='index.php?page=mech_list';
+                      </script>";
+            } else {
+                echo "Error System: " . $e->getMessage();
+            }
+        }
     }
 }
 ?>
