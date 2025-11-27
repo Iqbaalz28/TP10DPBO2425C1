@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2025 at 04:57 AM
+-- Generation Time: Nov 27, 2025 at 05:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,6 +37,16 @@ CREATE TABLE `bookings` (
   `status` enum('Pending','OnProcess','Done') DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`id`, `kode_booking`, `id_car`, `id_service`, `id_mechanic`, `tanggal`, `status`) VALUES
+(1, 'JDM-202311-001', 1, 1, 1, '2025-11-27', 'Pending'),
+(2, 'JDM-202311-002', 2, 2, 2, '2025-11-26', 'OnProcess'),
+(3, 'JDM-202310-089', 1, 2, 2, '2025-10-15', 'Done'),
+(4, 'JDM-202311-003', 2, 1, 1, '2025-11-27', 'Pending');
+
 -- --------------------------------------------------------
 
 --
@@ -56,7 +66,15 @@ CREATE TABLE `cars` (
 
 INSERT INTO `cars` (`id`, `id_owner`, `model`, `kode_mesin`) VALUES
 (1, 1, 'Toyota AE86', '4A-GE'),
-(2, 2, 'Mazda RX-7', '13B-REW');
+(2, 2, 'Mazda RX-7', '13B-REW'),
+(3, 4, 'Nissan Skyline GT-R R34 V-Spec II', 'RB26DETT'),
+(4, 4, 'Toyota Supra MK4 RZ', '2JZ-GTE'),
+(5, 3, 'Mazda RX-7 Veilside Fortune', '13B-REW'),
+(6, 3, 'Nissan Silvia S15 Mona Lisa', 'SR20DET'),
+(7, 5, 'Nissan 350Z Fairlady', 'VQ35DE'),
+(8, 1, 'Subaru Impreza WRX STI Type R', 'EJ20'),
+(9, 2, 'Mitsubishi Lancer Evolution IX MR', '4G63T'),
+(10, 2, 'Honda Integra Type R DC5', 'K20A');
 
 -- --------------------------------------------------------
 
@@ -77,7 +95,13 @@ CREATE TABLE `mechanics` (
 
 INSERT INTO `mechanics` (`id`, `nama_tuner`, `spesialisasi`, `status`) VALUES
 (1, 'Smokey Nagata', 'V-Type', 'Available'),
-(2, 'Keiichi', 'Rotary', 'Busy');
+(2, 'Keiichi', 'Rotary', 'Busy'),
+(3, 'Daigo Saito', 'Inline-6', 'Available'),
+(4, 'Tarzan Yamada', 'Inline-6', 'Busy'),
+(5, 'Bunta Fujiwara', 'Boxer', 'Available'),
+(6, 'Akira Nakai', 'Boxer', 'Busy'),
+(7, 'Mad Mike', 'Rotary', 'Available'),
+(8, 'Kazuhiko \"Smokey\" II', 'V-Type', 'Available');
 
 -- --------------------------------------------------------
 
@@ -98,7 +122,10 @@ CREATE TABLE `owners` (
 
 INSERT INTO `owners` (`id`, `nama_owner`, `kontak`, `membership_status`) VALUES
 (1, 'Takumi', '08123456789', 'Reguler'),
-(2, 'Ryosuke', '08198765432', 'JDM_VIP');
+(2, 'Ryosuke', '08198765432', 'JDM_VIP'),
+(3, 'Han Lue', '08123456789', 'JDM_VIP'),
+(4, 'Brian OConner', '08199887766', 'Reguler'),
+(5, 'DK (Drift King)', '08555556666', 'JDM_VIP');
 
 -- --------------------------------------------------------
 
@@ -118,8 +145,19 @@ CREATE TABLE `services` (
 --
 
 INSERT INTO `services` (`id`, `nama_layanan`, `jenis`, `harga`) VALUES
-(1, 'Ganti Oli High Perf', 'Service', 1500000.00),
-(2, 'Dyno Tuning Stage 1', 'Dyno Tuning', 5000000.00);
+(1, 'Ganti Oli High Perfomance', 'Service', 1500000.00),
+(2, 'Dyno Tuning Stage 1', 'Dyno Tuning', 5000000.00),
+(3, 'Ganti Oli Motul 300V Competition', 'Service', 2800000.00),
+(4, 'Install Coilover (Tein/Ohlins) + Alignment', 'Service', 3500000.00),
+(5, 'Brake Pad Replacement (Endless/Brembo)', 'Service', 4200000.00),
+(6, 'HKS Super Fire Racing Spark Plugs (Set)', 'Service', 1800000.00),
+(7, 'Titanium Exhaust Installation', 'Service', 1500000.00),
+(8, 'RB26/2JZ Engine Refresh/Rebuild', 'Service', 25000000.00),
+(9, 'ECU Remap Standalone (Haltech/Link)', 'Dyno Tuning', 8500000.00),
+(10, 'Dyno Power Run (3 Pulls)', 'Dyno Tuning', 1500000.00),
+(11, 'Boost Controller Setup (HKS EVC)', 'Dyno Tuning', 2500000.00),
+(12, 'Street Tune Calibration', 'Dyno Tuning', 4500000.00),
+(13, 'Pops & Bangs / Anti-Lag Setup', 'Dyno Tuning', 3000000.00);
 
 -- --------------------------------------------------------
 
@@ -186,31 +224,31 @@ ALTER TABLE `service_logs`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `mechanics`
 --
 ALTER TABLE `mechanics`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `owners`
 --
 ALTER TABLE `owners`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `service_logs`
