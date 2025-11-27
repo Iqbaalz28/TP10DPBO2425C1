@@ -8,21 +8,34 @@ class MechanicModel extends Database {
     }
 
     public function getMechanicById($id) {
+        $id = $this->escapeString($id);
         $query = "SELECT * FROM mechanics WHERE id='$id'";
         return $this->execute($query)->fetch_assoc();
     }
 
     public function createMechanic($nama, $spec, $status) {
+        // SANITASI INPUT
+        $nama = $this->escapeString($nama);
+        $spec = $this->escapeString($spec);
+        $status = $this->escapeString($status);
+
         $query = "INSERT INTO mechanics (nama_tuner, spesialisasi, status) VALUES ('$nama', '$spec', '$status')";
         return $this->execute($query);
     }
 
     public function updateMechanic($id, $nama, $spec, $status) {
+        // SANITASI INPUT
+        $id = $this->escapeString($id);
+        $nama = $this->escapeString($nama);
+        $spec = $this->escapeString($spec);
+        $status = $this->escapeString($status);
+
         $query = "UPDATE mechanics SET nama_tuner='$nama', spesialisasi='$spec', status='$status' WHERE id='$id'";
         return $this->execute($query);
     }
 
     public function deleteMechanic($id) {
+        $id = $this->escapeString($id);
         $query = "DELETE FROM mechanics WHERE id='$id'";
         return $this->execute($query);
     }

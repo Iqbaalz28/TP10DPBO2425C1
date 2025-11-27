@@ -8,21 +8,32 @@ class OwnerModel extends Database {
     }
 
     public function getOwnerById($id) {
+        $id = $this->escapeString($id);
         $query = "SELECT * FROM owners WHERE id='$id'";
         return $this->execute($query)->fetch_assoc();
     }
 
     public function createOwner($nama, $kontak, $status) {
+        $nama = $this->escapeString($nama);
+        $kontak = $this->escapeString($kontak);
+        $status = $this->escapeString($status);
+
         $query = "INSERT INTO owners (nama_owner, kontak, membership_status) VALUES ('$nama', '$kontak', '$status')";
         return $this->execute($query);
     }
 
     public function updateOwner($id, $nama, $kontak, $status) {
+        $id = $this->escapeString($id);
+        $nama = $this->escapeString($nama);
+        $kontak = $this->escapeString($kontak);
+        $status = $this->escapeString($status);
+
         $query = "UPDATE owners SET nama_owner='$nama', kontak='$kontak', membership_status='$status' WHERE id='$id'";
         return $this->execute($query);
     }
 
     public function deleteOwner($id) {
+        $id = $this->escapeString($id);
         $query = "DELETE FROM owners WHERE id='$id'";
         return $this->execute($query);
     }
